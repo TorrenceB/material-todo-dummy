@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React from "react";
 import {
   List,
   ListItem,
@@ -9,41 +9,30 @@ import {
 } from "@mui/material";
 import { Delete, Update } from "@mui/icons-material";
 
-export default function Todos() {
-  const [todos, setTodos] = useState([
-    {
-      id: "00",
-      title: "Dishes",
-    },
-    {
-      id: "01",
-      title: "Trash",
-    },
-    {
-      id: "02",
-      title: "Homework",
-    },
-  ]);
-
+export default function Todos(props) {
   return (
     <div className="todos-wrapper">
       <List>
-        {todos.map((todo) => {
-          return (
-            <ListItem key={todo.id}>
-              <ListItemIcon>
-                <Checkbox color="primary" />
-              </ListItemIcon>
-              <ListItemText primary={todo.title} />
-              <IconButton>
-                <Update color="info" />
-              </IconButton>
-              <IconButton>
-                <Delete color="error" />
-              </IconButton>
-            </ListItem>
-          );
-        })}
+        {props.todos.length !== 0 && props.todos ? (
+          props.todos.map((todo) => {
+            return (
+              <ListItem key={todo.id}>
+                <ListItemIcon>
+                  <Checkbox color="primary" />
+                </ListItemIcon>
+                <ListItemText primary={todo.title} />
+                <IconButton>
+                  <Update color="info" />
+                </IconButton>
+                <IconButton>
+                  <Delete color="error" />
+                </IconButton>
+              </ListItem>
+            );
+          })
+        ) : (
+          <ListItem></ListItem>
+        )}
       </List>
     </div>
   );
