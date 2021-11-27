@@ -21,7 +21,7 @@ export default function Todos(props) {
                   <Checkbox color="primary" />
                 </ListItemIcon>
                 <ListItemText primary={todo.title} />
-                <IconButton>
+                <IconButton onClick={props.updateClickHandler}>
                   <Update color="info" />
                 </IconButton>
                 <IconButton>

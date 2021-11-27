@@ -31,18 +31,33 @@ function App() {
     setUserInput(e.target.value);
   };
 
+  const validateInput = (str) => (str === "" ? true : false);
+
   const addTodo = (e) => {
     const newTodo = {
       id: Math.random(Math.floor() * 1000),
       title: userInput,
     };
-
     e.preventDefault();
 
-    setTodos((prevArr) => [newTodo, ...prevArr]);
+    if (!validateInput(userInput)) {
+      setTodos((prevState) => [newTodo, ...prevState]);
+      setUserInput("");
+    }
   };
 
-  const updateTodo = () => {};
+  const updateTodo = (todos) => {
+    const updatedTodo = {
+      id: 1,
+      title: "Updated Todo",
+    };
+
+    const index = todos.findIndex((todo) => todo.id === updatedTodo.id);
+
+    if (index !== -1) {
+      setTodos([...todos.splice(index, 1, updatedTodo)]);
+    }
+  };
 
   const deleteTodo = () => {};
 
@@ -57,6 +72,7 @@ function App() {
         sx={{ display: "flex", justifyContent: "space-between", pt: 2 }}
       >
         <TextField
+          // error={validateInput(userInput)}
           variant="outlined"
           label="Enter Todo"
           value={userInput}
@@ -68,7 +84,7 @@ function App() {
         </Button>
       </Container>
 
-      <Todos todos={todos} />
+      <Todos todos={todos} updateClickHandler={() => updateTodo(todos)} />
     </div>
   );
 }
