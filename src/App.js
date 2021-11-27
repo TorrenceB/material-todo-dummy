@@ -23,25 +23,21 @@ function App() {
     1. Completed --> Remove from list
     2. Incomplete...
 
-    Todo: Add modal to allow for user input of todo,
-      don't forget to make controlled, two way binding
   */
-  const [todos, setTodos] = useState(() => [
-    {
-      id: "00",
-      title: "Dishes",
-    },
-    {
-      id: "01",
-      title: "Trash",
-    },
-  ]);
+  const [userInput, setUserInput] = useState("");
+  const [todos, setTodos] = useState(() => []);
 
-  const addTodo = () => {
+  const changeHandler = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  const addTodo = (e) => {
     const newTodo = {
       id: Math.random(Math.floor() * 1000),
-      title: "Test todo",
+      title: userInput,
     };
+
+    e.preventDefault();
 
     setTodos((prevArr) => [newTodo, ...prevArr]);
   };
@@ -57,11 +53,15 @@ function App() {
           <Typography>Todo List</Typography>
         </Toolbar>
       </AppBar>
-      {/* Todo Input + Add Btn */}
       <Container
         sx={{ display: "flex", justifyContent: "space-between", pt: 2 }}
       >
-        <TextField variant="outlined" label="Enter Todo" />
+        <TextField
+          variant="outlined"
+          label="Enter Todo"
+          value={userInput}
+          onChange={changeHandler}
+        />
         <Button variant="outlined" onClick={addTodo}>
           Add Todo
           <Add />
