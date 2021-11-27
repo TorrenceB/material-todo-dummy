@@ -1,4 +1,11 @@
-import { AppBar, IconButton, Typography, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Container,
+  Typography,
+  Toolbar,
+  TextField,
+  Button,
+} from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Todos from "./components/Todos";
 
@@ -15,8 +22,11 @@ function App() {
 
     1. Completed --> Remove from list
     2. Incomplete...
+
+    Todo: Add modal to allow for user input of todo,
+      don't forget to make controlled, two way binding
   */
-  const [todos, setTodos] = useState([
+  const [todos, setTodos] = useState(() => [
     {
       id: "00",
       title: "Dishes",
@@ -27,18 +37,13 @@ function App() {
     },
   ]);
 
-  /* 
-    1. New todo object
-    2. Add object to todos arr
-      via setTodos.
-  */
   const addTodo = () => {
     const newTodo = {
       id: Math.random(Math.floor() * 1000),
       title: "Test todo",
     };
 
-    setTodos((prevArr) => [...prevArr, newTodo]);
+    setTodos((prevArr) => [newTodo, ...prevArr]);
   };
 
   const updateTodo = () => {};
@@ -50,11 +55,19 @@ function App() {
       <AppBar position="static">
         <Toolbar style={{ justifyContent: "space-between" }}>
           <Typography>Todo List</Typography>
-          <IconButton color="primary" onClick={addTodo}>
-            <Add />
-          </IconButton>
         </Toolbar>
       </AppBar>
+      {/* Todo Input + Add Btn */}
+      <Container
+        sx={{ display: "flex", justifyContent: "space-between", pt: 2 }}
+      >
+        <TextField variant="outlined" label="Enter Todo" />
+        <Button variant="outlined" onClick={addTodo}>
+          Add Todo
+          <Add />
+        </Button>
+      </Container>
+
       <Todos todos={todos} />
     </div>
   );
